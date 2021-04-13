@@ -1,0 +1,41 @@
+ <style>
+body {
+  background-color:#e6fff2;
+}
+</style>
+ 
+ 
+<table style="width:40%" border="1">
+    <caption>{{title}}</caption>
+  <tr> 
+  <form method="POST">
+    <th>Patient ID <input name="p_id"> </th>
+    <th>First Name<input name="p_firstname"></th>
+    <th>Last Name <input name="p_lastname"></th>
+    <th>Age <input name="p_age"></th>
+    <th>Gender <input name="p_gender"></th>
+    <td>
+    <input type="submit">
+</td>
+</form>
+</tr>
+  {% for row in rows %}
+ <tr> 
+    {% for element in row %}
+    <td>{{ element }}</td>
+    {% endfor %}
+</tr>
+    {% endfor %}
+</table>
+
+<br />
+
+<form method="POST">
+  <label for="p_id_request">Patient ID:</label><br>
+  <input name="p_id_request" ><br><br>
+  <input type="submit" value="Check CT">
+
+</form>
+
+<!--action="/images/<image_name>/"-->
+<!--onclick="this.form.target='_blank';return true;">-->

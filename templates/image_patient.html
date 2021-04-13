@@ -1,0 +1,136 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {
+  background-color:#e6fff2;
+}
+
+
+div.info {
+  position:absolute;
+  top: 10px;
+  left: 530px;
+  width: 200px;
+  height: 120px;
+  padding: 5px
+}
+
+div.image {
+  width:512px;
+  height:512px;
+  border: 1px solid #ddd
+}
+
+
+/* Popup container - can be anything you want */
+.popup {
+  position: absolute;
+  top: 470px;
+  left: -520px;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 200px;
+  height: 80px;
+  background-color:#ffffcc;
+  color: #000000;
+  text-align: left;
+  border-radius: 6px;
+  padding: 8px 8px;
+  position: absolute;
+  z-index: 1;
+  top: -80px;
+  left: 650px;
+  margin-left: -80px;
+}
+
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+
+button.button {
+  position: absolute;
+  left: 520px;
+  top: 0px;
+  
+}
+
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+
+form.logout {
+  position: absolute;
+  top: 0px;
+  left: 500px;
+  width: 70px;
+}
+
+
+</style>
+</head>
+
+<body>
+
+
+<div class = "image"> 
+<img src={{ url }}  id="patient_image">
+</div>
+
+<div class="info">
+<p>Patient ID: {{ userid }}</p>
+<p>Patient name: {{ patient_name }}</p>
+
+<form action="/login" method="get" class="logout">
+<button type="submit">Log out</button>
+</form>
+
+
+<div class="popup" onclick="myFunction()">
+<button class="button" type="button">Need help?</button>
+  <span class="popuptext" id="myPopup">
+      <p>Doctor name: 
+      <br>Email: 
+      <br>Phone number:
+  </span>
+</div>
+
+
+<p id="demo"></p>
+
+
+<script>
+
+// When the user clicks on div, open the popup
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+
+
+
+</script>
+
+</body>
+</html>

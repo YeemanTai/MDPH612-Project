@@ -1,0 +1,121 @@
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+body {
+  background-color:#e6fff2;
+}
+
+div.info {
+  position: absolute;
+  top: 5px;
+  left: 530px;
+  width: 200px;
+  height: 160px;
+  padding: 5px
+}
+
+
+div.imagevalues{
+  position: absolute;
+  top: 320px;
+  left: 530px;
+  width: 280px;
+  height: 160px;
+  padding: 5px
+  border-radius: 25px;
+  background-color: #ffffe6;
+  padding: 8px;
+}
+
+form.list {
+  position: absolute;
+  top: 20px;
+  left: 1000px;
+}
+
+form.logout {
+  position: absolute;
+  top: 50px;
+  left: 1000px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="info">
+<p>Patient ID: {{ p_id }}</p>
+<p>Patient name: {{ p_name }}</p>
+<p>Patient age: {{ p_age }}</p>
+<p>Patient gender: {{ p_gender }}</p>
+</div>
+
+<form action="/list" method="get" class="list">
+<button type="submit">Back to patient list</button>
+</form>
+
+<form action="/login" method="get" class="logout">
+<button type="submit">Log out</button>
+</form>
+
+
+<div>
+<img onclick="showCoords(event)" src={{ url }}  id="patient_image"  style="width:512px;height:512px;">
+</div>
+
+
+
+<div class="imagevalues" id="imagevalues">
+<p id="coords"></p>
+<p id="px"></p>
+<p id="hu"></p>
+<p id="substance"></p>
+</div>
+
+
+<script type='text/javascript'>
+
+function showCoords(event) {
+
+  var x = event.clientX - 8;
+  var y = event.clientY - 8;
+  var coords = "x-coordinate: " + x + ", y-coordinate: " + y;
+  let px_array = {{ pixel_array_numpy|tojson }};
+  let HU_array = {{ hu_array_numpy|tojson }};
+  
+  var px = px_array[y][x];
+  var px_text = "The pixel value is " + px + ".";
+  
+  var hu = HU_array[y][x];
+  var hu_text = "The HU value is " + hu + ".";
+  
+  document.getElementById("coords").innerHTML = coords;
+  document.getElementById("px").innerHTML = px_text;
+  document.getElementById("hu").innerHTML = hu_text;
+  
+  if (hu < -800) {
+    document.getElementById("substance").innerHTML = "This is likely to be: Air";
+  } else if (hu >= -600 && hu <= -400) {
+    document.getElementById("substance").innerHTML = "This is likely to be: Lung";
+  } else if (hu >= -120 && hu <= -30) {
+    document.getElementById("substance").innerHTML = "This is likely to be: Fat";
+  } else if (hu >= 40 && hu <= 300) {
+    document.getElementById("substance").innerHTML = "This is likely to be: Soft Tissue";
+  } else if (hu > 400) {
+    document.getElementById("substance").innerHTML = "This is likely to be: Bone";
+  } else {
+    document.getElementById("substance").innerHTML = "The tissue in this pixel is not identifiable.";
+  }
+
+}
+
+
+</script>
+
+</body>
+</html>
